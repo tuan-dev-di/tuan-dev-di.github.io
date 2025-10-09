@@ -3,207 +3,412 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tuong's Portfolio - nat-ui</title>
+        <title>Tuong's Portfolio - nat-ui Ecosystem</title>
         <style>
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
+
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
                     Roboto, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(
+                    -45deg,
+                    #667eea,
+                    #764ba2,
+                    #f093fb,
+                    #4facfe
+                );
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
                 min-height: 100vh;
                 padding: 40px 20px;
             }
+
+            @keyframes gradient {
+                0%,
+                100% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+            }
+
             .container {
-                max-width: 1200px;
+                max-width: 1400px;
                 margin: 0 auto;
             }
+
+            /* Header */
             header {
                 text-align: center;
                 color: white;
-                margin-bottom: 60px;
+                margin-bottom: 50px;
             }
-            h1 {
-                font-size: 3rem;
+
+            .title {
+                font-size: 3.5rem;
+                font-weight: 800;
                 margin-bottom: 16px;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             }
+
             .subtitle {
-                font-size: 1.2rem;
-                opacity: 0.9;
+                font-size: 1.3rem;
+                opacity: 0.95;
+                margin-bottom: 30px;
             }
+
+            /* Stats Bar */
+            .stats-bar {
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-bottom: 50px;
+            }
+
+            .stat-card {
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0.1)
+                );
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 16px;
+                padding: 20px 30px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: white;
+                display: block;
+            }
+
+            .stat-label {
+                font-size: 0.95rem;
+                color: rgba(255, 255, 255, 0.9);
+                font-weight: 600;
+            }
+
+            /* Section Titles */
+            .section-title {
+                text-align: center;
+                color: white;
+                font-size: 2rem;
+                font-weight: 700;
+                margin: 60px 0 30px;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .section-subtitle {
+                text-align: center;
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+            }
+
+            /* Projects Grid */
             .projects {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
                 gap: 24px;
+                margin-bottom: 30px;
             }
+
+            /* Card Styles */
             .card {
-                background: white;
-                border-radius: 12px;
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0.05)
+                );
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 20px;
                 padding: 32px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s, box-shadow 0.3s;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
             }
+
             .card:hover {
                 transform: translateY(-8px);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+                border-color: rgba(255, 255, 255, 0.5);
             }
+
+            .card.featured {
+                border: 2px solid rgba(251, 191, 36, 0.8);
+                box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2),
+                    0 8px 32px rgba(0, 0, 0, 0.15);
+            }
+
+            .featured-badge {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #fbbf24, #f59e0b);
+                color: white;
+                padding: 6px 14px;
+                border-radius: 8px;
+                font-weight: 700;
+                font-size: 0.75rem;
+                box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+
             .card h2 {
                 font-size: 1.5rem;
                 margin-bottom: 12px;
-                color: #333;
+                color: white;
+                font-weight: 700;
             }
+
             .card p {
-                color: #666;
+                color: rgba(255, 255, 255, 0.9);
                 line-height: 1.6;
                 margin-bottom: 20px;
+                font-size: 0.95rem;
             }
+
+            /* Badges */
             .badges {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
                 margin-bottom: 20px;
             }
+
             .badge {
-                background: #f0f0f0;
-                padding: 4px 12px;
-                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                padding: 5px 12px;
+                border-radius: 8px;
                 font-size: 0.75rem;
-                color: #666;
-            }
-            .links a {
-                display: inline-block;
-                margin-right: 16px;
-                color: #667eea;
-                text-decoration: none;
+                color: white;
                 font-weight: 600;
-                transition: color 0.2s;
             }
+
+            .badge-green {
+                background: rgba(74, 222, 128, 0.3);
+                border-color: rgba(74, 222, 128, 0.5);
+            }
+
+            .badge-blue {
+                background: rgba(59, 130, 246, 0.3);
+                border-color: rgba(59, 130, 246, 0.5);
+            }
+
+            .badge-purple {
+                background: rgba(168, 85, 247, 0.3);
+                border-color: rgba(168, 85, 247, 0.5);
+            }
+
+            /* Links */
+            .links {
+                display: flex;
+                gap: 12px;
+            }
+
+            .links a {
+                flex: 1;
+                padding: 10px 16px;
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 10px;
+                color: white;
+                text-decoration: none;
+                text-align: center;
+                font-weight: 600;
+                font-size: 0.85rem;
+                transition: all 0.3s;
+            }
+
             .links a:hover {
-                color: #764ba2;
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
             }
+
+            .link-primary {
+                background: linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #2563eb
+                ) !important;
+                border: none !important;
+            }
+
+            /* Footer */
             footer {
                 text-align: center;
                 color: white;
-                margin-top: 60px;
-                opacity: 0.8;
+                margin-top: 80px;
+                padding: 30px 0;
+            }
+
+            footer p {
+                opacity: 0.9;
+                margin-bottom: 12px;
+            }
+
+            footer a {
+                color: white;
+                text-decoration: none;
+                font-weight: 600;
+                padding: 8px 20px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                transition: all 0.3s;
+                display: inline-block;
+            }
+
+            footer a:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .title {
+                    font-size: 2.5rem;
+                }
+
+                .projects {
+                    grid-template-columns: 1fr;
+                }
+
+                .stats-bar {
+                    flex-direction: column;
+                    align-items: center;
+                }
             }
         </style>
     </head>
     <body>
         <div class="container">
             <header>
-                <h1>🚀 Tuong's Portfolio</h1>
+                <h1 class="title">🚀 nat-ui Ecosystem</h1>
                 <p class="subtitle">
-                    Frontend Developer | Open Source Contributor
+                    Framework-agnostic UI Components | Write Once, Use
+                    Everywhere
                 </p>
             </header>
 
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">Framework Examples</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Web Components</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">Open</span>
+                    <span class="stat-label">Source (Apache 2.0)</span>
+                </div>
+            </div>
+
+            <!-- Core Library -->
+            <h2 class="section-title">📦 Core Library</h2>
             <div class="projects">
-                <div class="card">
+                <div class="card featured">
+                    <span class="featured-badge">⭐ Core</span>
+                    <div class="card-icon">⚡</div>
                     <h2>nat-ui</h2>
                     <p>
                         Framework-agnostic UI component library built with
-                        Stencil. Write once, use everywhere.
+                        Stencil. Create components once and use them anywhere.
                     </p>
                     <div class="badges">
-                        <span class="badge">Web Components</span>
-                        <span class="badge">Stencil</span>
-                        <span class="badge">TypeScript</span>
-                        <span class="badge">Apache 2.0</span>
+                        <span class="badge badge-purple">Web Components</span>
+                        <span class="badge badge-blue">Stencil</span>
+                        <span class="badge badge-green">TypeScript</span>
                     </div>
                     <div class="links">
                         <a
                             href="https://tuongna.github.io/nat-ui/"
-                            target="_blank"
-                            >📚 Documentation →</a
-                        ><br />
-                        <a
-                            href="https://github.com/tuongna/nat-ui"
-                            target="_blank"
-                            >💻 GitHub →</a
+                            class="link-primary"
+                            >📚 Documentation</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui"
+                            >💻 GitHub</a
                         >
                     </div>
                 </div>
+            </div>
 
+            <!-- CSR Examples -->
+            <h2 class="section-title">🎨 Client-Side Rendering (CSR)</h2>
+            <p class="section-subtitle">
+                Traditional SPA frameworks with nat-ui integration
+            </p>
+            <div class="projects">
                 <div class="card">
-                    <h2>React Examples</h2>
+                    <div class="card-icon">⚛️</div>
+                    <h2>React</h2>
                     <p>
-                        Live examples of nat-ui components integrated in React
-                        applications.
+                        nat-ui components integrated with React 19, showcasing
+                        seamless Web Components usage.
                     </p>
                     <div class="badges">
-                        <span class="badge">React 19</span>
+                        <span class="badge badge-blue">React 19</span>
                         <span class="badge">Vite</span>
+                        <span class="badge badge-green">Live</span>
                     </div>
                     <div class="links">
                         <a
                             href="https://tuongna.github.io/nat-ui-react/"
-                            target="_blank"
-                            >🎯 Live Demo →</a
-                        ><br />
-                        <a
-                            href="https://github.com/tuongna/nat-ui-react"
-                            target="_blank"
-                            >💻 GitHub →</a
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-react"
+                            >GitHub</a
                         >
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>Vue Examples</h2>
+                    <div class="card-icon">💚</div>
+                    <h2>Vue</h2>
                     <p>
-                        Live examples of nat-ui components integrated in Vue 3
-                        applications.
+                        Vue 3 Composition API with nat-ui Web Components
+                        integration.
                     </p>
                     <div class="badges">
-                        <span class="badge">Vue 3</span>
+                        <span class="badge badge-green">Vue 3</span>
                         <span class="badge">Vite</span>
                     </div>
                     <div class="links">
                         <a
                             href="https://tuongna.github.io/nat-ui-vue/"
-                            target="_blank"
-                            >🎯 Live Demo →</a
-                        ><br />
-                        <a
-                            href="https://github.com/tuongna/nat-ui-vue"
-                            target="_blank"
-                            >💻 GitHub →</a
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-vue"
+                            >GitHub</a
                         >
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>Angular Examples</h2>
+                    <div class="card-icon">🧡</div>
+                    <h2>Svelte</h2>
                     <p>
-                        Live examples of nat-ui components integrated in Angular
-                        applications.
-                    </p>
-                    <div class="badges">
-                        <span class="badge">Angular 18</span>
-                    </div>
-                    <div class="links">
-                        <a
-                            href="https://tuongna.github.io/nat-ui-angular/"
-                            target="_blank"
-                            >🎯 Live Demo →</a
-                        ><br />
-                        <a
-                            href="https://github.com/tuongna/nat-ui-angular"
-                            target="_blank"
-                            >💻 GitHub →</a
-                        >
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Svelte Examples</h2>
-                    <p>
-                        Live examples of nat-ui components integrated in Svelte
-                        applications.
+                        Svelte 5 with nat-ui components, demonstrating
+                        compiler-based framework integration.
                     </p>
                     <div class="badges">
                         <span class="badge">Svelte 5</span>
@@ -212,13 +417,265 @@
                     <div class="links">
                         <a
                             href="https://tuongna.github.io/nat-ui-svelte/"
-                            target="_blank"
-                            >🎯 Live Demo →</a
-                        ><br />
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-svelte"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🅰️</div>
+                    <h2>Angular</h2>
+                    <p>
+                        Angular 18 with nat-ui Web Components, enterprise-ready
+                        integration.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Angular 18</span>
+                        <span class="badge badge-blue">TypeScript</span>
+                    </div>
+                    <div class="links">
                         <a
-                            href="https://github.com/tuongna/nat-ui-svelte"
-                            target="_blank"
-                            >💻 GitHub →</a
+                            href="https://tuongna.github.io/nat-ui-angular/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-angular"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- SSR Examples -->
+            <h2 class="section-title">🚀 Server-Side Rendering (SSR)</h2>
+            <p class="section-subtitle">
+                Modern meta-frameworks with SSR capabilities
+            </p>
+            <div class="projects">
+                <div class="card featured">
+                    <span class="featured-badge">⭐ Featured</span>
+                    <div class="card-icon">🎯</div>
+                    <h2>SvelteKit</h2>
+                    <p>
+                        Full-stack Svelte framework with SSR. Includes Korean
+                        flashcards demo app.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">SvelteKit</span>
+                        <span class="badge badge-purple">SSR</span>
+                        <span class="badge badge-blue">Flashcards</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-sveltekit/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-sveltekit"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">▲</div>
+                    <h2>Next.js</h2>
+                    <p>
+                        React meta-framework with SSR, SSG, and ISR capabilities
+                        with nat-ui.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-blue">Next.js</span>
+                        <span class="badge badge-purple">SSR</span>
+                        <span class="badge">React</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-next/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-next"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💚</div>
+                    <h2>Nuxt</h2>
+                    <p>
+                        Vue meta-framework with powerful SSR and static
+                        generation.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-green">Nuxt.js</span>
+                        <span class="badge badge-purple">SSR</span>
+                        <span class="badge">Vue</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-nuxt/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-nuxt"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔺</div>
+                    <h2>Angular Universal</h2>
+                    <p>
+                        Official Angular SSR solution with nat-ui Web
+                        Components.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Angular Universal</span>
+                        <span class="badge badge-purple">SSR</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-angular-universal/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a
+                            href="https://github.com/tuongna/nat-ui-angular-universal"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📐</div>
+                    <h2>Analog</h2>
+                    <p>
+                        Modern Angular meta-framework with Vite and SSR support.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Analog</span>
+                        <span class="badge badge-purple">SSR</span>
+                        <span class="badge">Vite</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-analog/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-analog"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Purpose -->
+            <h2 class="section-title">✨ Special Purpose</h2>
+            <p class="section-subtitle">
+                Unique frameworks showcasing nat-ui versatility
+            </p>
+            <div class="projects">
+                <div class="card featured">
+                    <span class="featured-badge">⭐ Zero JS</span>
+                    <div class="card-icon">🚀</div>
+                    <h2>Astro</h2>
+                    <p>
+                        Zero JavaScript by default with Islands Architecture.
+                        Perfect for content-driven sites.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-purple">Astro</span>
+                        <span class="badge badge-green">Zero JS</span>
+                        <span class="badge badge-blue">Islands</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-astro/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-astro"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔥</div>
+                    <h2>Lit</h2>
+                    <p>
+                        Google's Web Components library. Native Web Components
+                        with nat-ui.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-purple">Lit</span>
+                        <span class="badge">Web Components</span>
+                        <span class="badge badge-blue">Google</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-lit/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-lit"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h2>Preact</h2>
+                    <p>
+                        3KB React alternative. Lightweight and blazing fast with
+                        nat-ui.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-purple">Preact</span>
+                        <span class="badge badge-green">3KB</span>
+                        <span class="badge">Fast</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-preact/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-preact"
+                            >GitHub</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💎</div>
+                    <h2>Solid</h2>
+                    <p>
+                        Fine-grained reactivity without Virtual DOM. Extremely
+                        performant.
+                    </p>
+                    <div class="badges">
+                        <span class="badge badge-blue">Solid.js</span>
+                        <span class="badge badge-green">Reactive</span>
+                        <span class="badge">No VDOM</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-solid/"
+                            class="link-primary"
+                            >🎯 Demo</a
+                        >
+                        <a href="https://github.com/tuongna/nat-ui-solid"
+                            >GitHub</a
                         >
                     </div>
                 </div>
@@ -226,11 +683,7 @@
 
             <footer>
                 <p>Built with ❤️ by Tuong | Open Source under Apache 2.0</p>
-                <p style="margin-top: 8px">
-                    <a href="https://github.com/tuongna" style="color: white"
-                        >GitHub Profile</a
-                    >
-                </p>
+                <a href="https://github.com/tuongna">🐙 GitHub Profile</a>
             </footer>
         </div>
     </body>
