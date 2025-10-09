@@ -1,118 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Ứng dụng học từ vựng và câu mẫu tiếng Hàn. Luyện tập, ôn tập và cải thiện kỹ năng tiếng Hàn của bạn."
-    />
-    <meta name="theme-color" content="#1976d2" />
-    <title>KfR | Từ vựng</title>
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tuong's Portfolio - nat-ui</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                    Roboto, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                padding: 40px 20px;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                color: white;
+                margin-bottom: 60px;
+            }
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 16px;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.9;
+            }
+            .projects {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+            }
+            .card {
+                background: white;
+                border-radius: 12px;
+                padding: 32px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+            .card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+            .card h2 {
+                font-size: 1.5rem;
+                margin-bottom: 12px;
+                color: #333;
+            }
+            .card p {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .badges {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+            .badge {
+                background: #f0f0f0;
+                padding: 4px 12px;
+                border-radius: 12px;
+                font-size: 0.75rem;
+                color: #666;
+            }
+            .links a {
+                display: inline-block;
+                margin-right: 16px;
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 600;
+                transition: color 0.2s;
+            }
+            .links a:hover {
+                color: #764ba2;
+            }
+            footer {
+                text-align: center;
+                color: white;
+                margin-top: 60px;
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>🚀 Tuong's Portfolio</h1>
+                <p class="subtitle">
+                    Frontend Developer | Open Source Contributor
+                </p>
+            </header>
 
-  <body>
-    <div id="stats"></div>
-    <h1>라이언의 한국어</h1>
-    <div id="app">
-      <nav class="navbar">
-        <ul>
-          <li>
-            <a href="/#/vocab" data-link>Từ vựng</a>
-          </li>
-          <li>
-            <a href="/#/sentences" data-link>Câu mẫu</a>
-          </li>
-          <li>
-            <a href="lessons.html">Bài học</a>
-          </li>
-          <li>
-            <a href="feedback.html">Góp ý</a>
-          </li>
-        </ul>
-      </nav>
-      <div class="actions">
-        <button class="btn-primary" id="prevBtn">Trước</button>
-        <button class="btn-primary" id="nextBtn">Tiếp</button>
-      </div>
-      <div id="card">
-        <div class="progress-container">
-          <div id="learn-progress-list" class="progress-list" style="display: none">
-            <div class="progress-item">
-              <progress id="learn-progress-bronze" value="0" max="100"></progress>
-              <span>🥉</span>
+            <div class="projects">
+                <div class="card">
+                    <h2>nat-ui</h2>
+                    <p>
+                        Framework-agnostic UI component library built with
+                        Stencil. Write once, use everywhere.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Web Components</span>
+                        <span class="badge">Stencil</span>
+                        <span class="badge">TypeScript</span>
+                        <span class="badge">Apache 2.0</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui/"
+                            target="_blank"
+                            >📚 Documentation →</a
+                        ><br />
+                        <a
+                            href="https://github.com/tuongna/nat-ui"
+                            target="_blank"
+                            >💻 GitHub →</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>React Examples</h2>
+                    <p>
+                        Live examples of nat-ui components integrated in React
+                        applications.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">React 19</span>
+                        <span class="badge">Vite</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-react/"
+                            target="_blank"
+                            >🎯 Live Demo →</a
+                        ><br />
+                        <a
+                            href="https://github.com/tuongna/nat-ui-react"
+                            target="_blank"
+                            >💻 GitHub →</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Vue Examples</h2>
+                    <p>
+                        Live examples of nat-ui components integrated in Vue 3
+                        applications.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Vue 3</span>
+                        <span class="badge">Vite</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-vue/"
+                            target="_blank"
+                            >🎯 Live Demo →</a
+                        ><br />
+                        <a
+                            href="https://github.com/tuongna/nat-ui-vue"
+                            target="_blank"
+                            >💻 GitHub →</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Angular Examples</h2>
+                    <p>
+                        Live examples of nat-ui components integrated in Angular
+                        applications.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Angular 18</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-angular/"
+                            target="_blank"
+                            >🎯 Live Demo →</a
+                        ><br />
+                        <a
+                            href="https://github.com/tuongna/nat-ui-angular"
+                            target="_blank"
+                            >💻 GitHub →</a
+                        >
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Svelte Examples</h2>
+                    <p>
+                        Live examples of nat-ui components integrated in Svelte
+                        applications.
+                    </p>
+                    <div class="badges">
+                        <span class="badge">Svelte 5</span>
+                        <span class="badge">Vite</span>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="https://tuongna.github.io/nat-ui-svelte/"
+                            target="_blank"
+                            >🎯 Live Demo →</a
+                        ><br />
+                        <a
+                            href="https://github.com/tuongna/nat-ui-svelte"
+                            target="_blank"
+                            >💻 GitHub →</a
+                        >
+                    </div>
+                </div>
             </div>
-            <div class="progress-item">
-              <progress id="learn-progress-silver" value="0" max="100"></progress>
-              <span>🥈</span>
-            </div>
-            <div class="progress-item">
-              <progress id="learn-progress-gold" value="0" max="100"></progress>
-              <span>🥇</span>
-            </div>
-            <div class="progress-item">
-              <progress id="learn-progress-cup" value="0" max="100"></progress>
-              <span>🏆</span>
-            </div>
-            <div class="progress-item">
-              <progress id="learn-progress-diamond" value="0" max="100"></progress>
-              <span>💎</span>
-            </div>
-          </div>
-          <span id="review-message" style="display: none">Quay lại ôn tập nhé</span>
+
+            <footer>
+                <p>Built with ❤️ by Tuong | Open Source under Apache 2.0</p>
+                <p style="margin-top: 8px">
+                    <a href="https://github.com/tuongna" style="color: white"
+                        >GitHub Profile</a
+                    >
+                </p>
+            </footer>
         </div>
-        <div class="practice-container">
-          <input type="checkbox" id="practice-mode" />
-          <label for="practice-mode">Luyện tập</label>
-        </div>
-        <div id="card-badge"></div>
-        <div id="word">
-          <span>----</span>
-          <button class="btn-icon" data-speak="">🔊</button>
-        </div>
-        <div id="phonetic">----</div>
-        <div id="meaning">----</div>
-        <div id="quiz" class="quiz-words"></div>
-      </div>
-    </div>
-    <div class="stt-container">
-      <div>
-        <button id="start" disabled>Start</button>
-        <canvas id="visualizer" width="240" height="48"></canvas>
-        <p id="countdown-timer"></p>
-      </div>
-      <div id="status"></div>
-      <div id="results"></div>
-      <div id="model-loading-bar">
-        <div id="progress"></div>
-      </div>
-    </div>
-    <div class="global-action-buttons">
-      <button id="btn-update" class="btn-text" style="display: none">🔄 Update</button>
-      <a href="fb.html" class="btn-text">🔗 Đến trang đồng bộ dữ liệu</a>
-    </div>
-    <footer class="footer">
-      <a href="https://github.com/tuongna/kfr" target="_blank" rel="noopener noreferrer">
-        Xem trên GitHub
-      </a>
-    </footer>
-    <script type="module" src="js/version-manager.js"></script>
-    <script type="module" src="js/app.js"></script>
-    <script type="module" src="js/stt.js"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('sw.js', { type: 'module' })
-          .then(() => console.log('Service Worker registered'))
-          .catch((err) => console.log('Service Worker failed:', err));
-      }
-    </script>
-  </body>
+    </body>
 </html>
