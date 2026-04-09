@@ -1,1441 +1,661 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tuong's Portfolio - nat-ui Ecosystem</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                    Roboto, sans-serif;
-                background: linear-gradient(
-                    -45deg,
-                    #667eea,
-                    #764ba2,
-                    #f093fb,
-                    #4facfe
-                );
-                background-size: 400% 400%;
-                animation: gradient 15s ease infinite;
-                min-height: 100vh;
-                padding: 40px 20px;
-            }
-
-            @keyframes gradient {
-                0%,
-                100% {
-                    background-position: 0% 50%;
-                }
-                50% {
-                    background-position: 100% 50%;
-                }
-            }
-
-            .container {
-                max-width: 1400px;
-                margin: 0 auto;
-            }
-
-            /* Navigation Tabs */
-            .nav-tabs-container {
-                text-align: center;
-                margin-bottom: 40px;
-            }
-
-            .nav-tabs {
-                display: inline-flex;
-                gap: 8px;
-                justify-content: center;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 8px;
-                border-radius: 20px;
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-
-            .nav-tab {
-                padding: 12px 24px;
-                background: transparent;
-                border: none;
-                border-radius: 12px;
-                color: rgba(255, 255, 255, 0.7);
-                font-weight: 600;
-                font-size: 15px;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-
-            .nav-tab:hover {
-                color: white;
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .nav-tab.active {
-                background: rgba(59, 130, 246, 0.5);
-                color: white;
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            }
-
-            /* Content Sections */
-            .content-section {
-                display: none;
-            }
-
-            .content-section.active {
-                display: block;
-            }
-
-            /* Header */
-            header {
-                text-align: center;
-                color: white;
-                margin-bottom: 50px;
-            }
-
-            .title {
-                font-size: 3.5rem;
-                font-weight: 800;
-                margin-bottom: 16px;
-                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            .subtitle {
-                font-size: 1.3rem;
-                opacity: 0.95;
-                margin-bottom: 30px;
-            }
-
-            /* Stats Bar */
-            .stats-bar {
-                display: flex;
-                gap: 20px;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-bottom: 50px;
-            }
-
-            .stat-card {
-                background: linear-gradient(
-                    135deg,
-                    rgba(255, 255, 255, 0.2),
-                    rgba(255, 255, 255, 0.1)
-                );
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 16px;
-                padding: 20px 30px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            }
-
-            .stat-number {
-                font-size: 2.5rem;
-                font-weight: 800;
-                color: white;
-                display: block;
-            }
-
-            .stat-label {
-                font-size: 0.95rem;
-                color: rgba(255, 255, 255, 0.9);
-                font-weight: 600;
-            }
-
-            /* Section Titles */
-            .section-title {
-                text-align: center;
-                color: white;
-                font-size: 2rem;
-                font-weight: 700;
-                margin: 60px 0 30px;
-                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            .section-subtitle {
-                text-align: center;
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 1.1rem;
-                margin-bottom: 40px;
-            }
-
-            /* Projects Grid */
-            .projects {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-                gap: 24px;
-                margin-bottom: 30px;
-            }
-
-            /* Card Styles */
-            .card {
-                background: linear-gradient(
-                    135deg,
-                    rgba(255, 255, 255, 0.15),
-                    rgba(255, 255, 255, 0.05)
-                );
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 20px;
-                padding: 32px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                position: relative;
-                overflow: hidden;
-            }
-
-            .card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-                border-color: rgba(255, 255, 255, 0.5);
-            }
-
-            .card.featured {
-                border: 2px solid rgba(251, 191, 36, 0.8);
-                box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2),
-                    0 8px 32px rgba(0, 0, 0, 0.15);
-            }
-
-            .featured-badge {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #fbbf24, #f59e0b);
-                color: white;
-                padding: 6px 14px;
-                border-radius: 8px;
-                font-weight: 700;
-                font-size: 0.75rem;
-                box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
-            }
-
-            .card-icon {
-                font-size: 2.5rem;
-                margin-bottom: 16px;
-            }
-
-            .card h2 {
-                font-size: 1.5rem;
-                margin-bottom: 12px;
-                color: white;
-                font-weight: 700;
-            }
-
-            .card p {
-                color: rgba(255, 255, 255, 0.9);
-                line-height: 1.6;
-                margin-bottom: 20px;
-                font-size: 0.95rem;
-            }
-
-            /* Badges */
-            .badges {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-                margin-bottom: 20px;
-            }
-
-            .badge {
-                background: rgba(255, 255, 255, 0.2);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                padding: 5px 12px;
-                border-radius: 8px;
-                font-size: 0.75rem;
-                color: white;
-                font-weight: 600;
-            }
-
-            .badge-green {
-                background: rgba(74, 222, 128, 0.3);
-                border-color: rgba(74, 222, 128, 0.5);
-            }
-
-            .badge-blue {
-                background: rgba(59, 130, 246, 0.3);
-                border-color: rgba(59, 130, 246, 0.5);
-            }
-
-            .badge-purple {
-                background: rgba(168, 85, 247, 0.3);
-                border-color: rgba(168, 85, 247, 0.5);
-            }
-
-            /* Links */
-            .links {
-                display: flex;
-                gap: 12px;
-            }
-
-            .links a {
-                flex: 1;
-                padding: 10px 16px;
-                background: rgba(255, 255, 255, 0.2);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 10px;
-                color: white;
-                text-decoration: none;
-                text-align: center;
-                font-weight: 600;
-                font-size: 0.85rem;
-                transition: all 0.3s;
-            }
-
-            .links a:hover {
-                background: rgba(255, 255, 255, 0.3);
-                transform: translateY(-2px);
-            }
-
-            .link-primary {
-                background: linear-gradient(
-                    135deg,
-                    #3b82f6,
-                    #2563eb
-                ) !important;
-                border: none !important;
-            }
-
-            /* Skills Heatmap Styles */
-            .heatmap-card {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 24px;
-                padding: 0;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-                position: relative;
-                overflow: hidden;
-            }
-
-            .heatmap-card::before {
-                content: '';
-                position: absolute;
-                inset: -1px;
-                border-radius: 24px;
-                padding: 1px;
-                background: linear-gradient(
-                    90deg,
-                    #5b6fe8 0%,
-                    #3b82f6 50%,
-                    #5b6fe8 100%
-                );
-                background-size: 200% 100%;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box,
-                    linear-gradient(#fff 0 0);
-                mask: linear-gradient(#fff 0 0) content-box,
-                    linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                mask-composite: exclude;
-                animation: laser-border 6s linear infinite;
-                pointer-events: none;
-                z-index: 1;
-            }
-
-            @keyframes laser-border {
-                0% {
-                    background-position: 0% 0%;
-                }
-                100% {
-                    background-position: 200% 0%;
-                }
-            }
-
-            .card-header {
-                padding: 32px 32px 0;
-                position: relative;
-                z-index: 2;
-            }
-
-            .card-header h1 {
-                font-size: 28px;
-                font-weight: 600;
-                color: #1f1f1f;
-                margin-bottom: 8px;
-            }
-
-            .card-body {
-                padding: 16px 32px 32px;
-                position: relative;
-                z-index: 2;
-            }
-
-            .treemap-container {
-                position: relative;
-                height: 720px;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .tile {
-                position: absolute;
-                border: 1px solid rgba(255, 255, 255);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 2px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                overflow: hidden;
-            }
-
-            .tile.dimmed {
-                opacity: 0.6;
-                filter: grayscale(0.8);
-            }
-
-            .tile.highlighted {
-                opacity: 1;
-                filter: grayscale(0);
-                border-color: rgba(255, 255, 255, 0.9);
-            }
-
-            .tile:hover {
-                z-index: 10;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            }
-
-            .treemap-container:has(.tile:hover) .tile:not(:hover) {
-                opacity: 0.25;
-                filter: grayscale(0.7);
-            }
-
-            .treemap-container:has(.tile:hover) .tile:hover {
-                opacity: 1 !important;
-                filter: grayscale(0) !important;
-            }
-
-            .tile-label {
-                font-size: 11px;
-                font-weight: 600;
-                color: #1f1f1f;
-                text-align: center;
-                word-break: break-word;
-                line-height: 1.2;
-                margin-bottom: 4px;
-            }
-
-            .tile-value {
-                font-size: 13px;
-                font-weight: 700;
-                color: #1f1f1f;
-            }
-
-            .filters-container {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-                padding: 16px 32px;
-                position: relative;
-                z-index: 2;
-            }
-
-            .filter-section {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .filter-label {
-                font-size: 12px;
-                font-weight: 600;
-                color: #1f1f1f;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-
-            .filters {
-                display: flex;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-
-            .filter-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-                font-weight: 500;
-                color: #1f1f1f;
-                background: rgba(255, 255, 255, 0.1);
-                border: 2px solid rgba(255, 255, 255, 0.2);
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                font-family: inherit;
-                display: inline-flex;
-                align-items: center;
-                column-gap: 6px;
-            }
-
-            .filter-btn:hover {
-                background: rgba(255, 255, 255, 0.2);
-                transform: translateY(-1px);
-            }
-
-            .filter-btn.active {
-                background: rgba(59, 130, 246, 0.3);
-                border-color: rgba(59, 130, 246, 0.6);
-                color: #1f1f1f;
-                box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-            }
-
-            .filter-color {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-            }
-
-            /* Footer */
-            footer {
-                text-align: center;
-                color: white;
-                margin-top: 80px;
-                padding: 30px 0;
-            }
-
-            footer p {
-                opacity: 0.9;
-                margin-bottom: 12px;
-            }
-
-            footer a {
-                color: white;
-                text-decoration: none;
-                font-weight: 600;
-                padding: 8px 20px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 8px;
-                transition: all 0.3s;
-                display: inline-block;
-            }
-
-            footer a:hover {
-                background: rgba(255, 255, 255, 0.3);
-            }
-
-            /* Responsive */
-            @media (max-width: 768px) {
-                .title {
-                    font-size: 2.5rem;
-                }
-                .projects {
-                    grid-template-columns: 1fr;
-                }
-                .stats-bar {
-                    flex-direction: column;
-                    align-items: center;
-                }
-                .treemap-container {
-                    height: 640px;
-                }
-                .card-header h1 {
-                    font-size: 24px;
-                }
-                .nav-tab {
-                    padding: 10px 16px;
-                    font-size: 14px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <!-- Navigation Tabs -->
-            <div class="nav-tabs-container">
-                <nav class="nav-tabs">
-                    <button
-                        class="nav-tab active"
-                        onclick="switchTab('portfolio')"
-                    >
-                        🚀 Portfolio
-                    </button>
-                    <button class="nav-tab" onclick="switchTab('skills')">
-                        📊 Skills Heatmap
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Portfolio Section -->
-            <div id="portfolio-section" class="content-section active">
-                <header>
-                    <h1 class="title">🚀 nat-ui Ecosystem</h1>
-                    <p class="subtitle">
-                        Framework-agnostic UI Components | Write Once, Use
-                        Everywhere
-                    </p>
-                </header>
-
-                <!-- Stats Bar -->
-                <div class="stats-bar">
-                    <div class="stat-card">
-                        <span class="stat-number">14</span>
-                        <span class="stat-label">Framework Examples</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Web Components</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">Open</span>
-                        <span class="stat-label">Source (Apache 2.0)</span>
-                    </div>
-                </div>
-
-                <!-- Core Library -->
-                <h2 class="section-title">📦 Core Library</h2>
-                <div class="projects">
-                    <div class="card featured">
-                        <span class="featured-badge">⭐ Core</span>
-                        <div class="card-icon">⚡</div>
-                        <h2>nat-ui</h2>
-                        <p>
-                            Framework-agnostic UI component library built with
-                            Stencil. Create components once and use them
-                            anywhere.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-purple"
-                                >Web Components</span
-                            >
-                            <span class="badge badge-blue">Stencil</span>
-                            <span class="badge badge-green">TypeScript</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui/"
-                                class="link-primary"
-                                >📚 Documentation</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui"
-                                >💻 GitHub</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CSR Examples -->
-                <h2 class="section-title">🎨 Client-Side Rendering (CSR)</h2>
-                <p class="section-subtitle">
-                    Traditional SPA frameworks with nat-ui integration
-                </p>
-                <div class="projects">
-                    <div class="card">
-                        <div class="card-icon">⚛️</div>
-                        <h2>React</h2>
-                        <p>
-                            nat-ui components integrated with React 19,
-                            showcasing seamless Web Components usage.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-blue">React 19</span>
-                            <span class="badge">Vite</span>
-                            <span class="badge badge-green">Live</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-react/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-react"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">💚</div>
-                        <h2>Vue</h2>
-                        <p>
-                            Vue 3 Composition API with nat-ui Web Components
-                            integration.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-green">Vue 3</span>
-                            <span class="badge">Vite</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-vue/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-vue"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">🧡</div>
-                        <h2>Svelte</h2>
-                        <p>
-                            Svelte 5 with nat-ui components, demonstrating
-                            compiler-based framework integration.
-                        </p>
-                        <div class="badges">
-                            <span class="badge">Svelte 5</span>
-                            <span class="badge">Vite</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-svelte/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-svelte"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">🅰️</div>
-                        <h2>Angular</h2>
-                        <p>
-                            Angular 18 with nat-ui Web Components,
-                            enterprise-ready integration.
-                        </p>
-                        <div class="badges">
-                            <span class="badge">Angular 18</span>
-                            <span class="badge badge-blue">TypeScript</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-angular/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-angular"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SSR Examples -->
-                <h2 class="section-title">🚀 Server-Side Rendering (SSR)</h2>
-                <p class="section-subtitle">
-                    Modern meta-frameworks with SSR capabilities
-                </p>
-                <div class="projects">
-                    <div class="card featured">
-                        <span class="featured-badge">⭐ Featured</span>
-                        <div class="card-icon">🎯</div>
-                        <h2>SvelteKit</h2>
-                        <p>
-                            Full-stack Svelte framework with SSR. Includes
-                            Korean flashcards demo app.
-                        </p>
-                        <div class="badges">
-                            <span class="badge">SvelteKit</span>
-                            <span class="badge badge-purple">SSR</span>
-                            <span class="badge badge-blue">Flashcards</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-sveltekit/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a
-                                href="https://github.com/tuongna/nat-ui-sveltekit"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">▲</div>
-                        <h2>Next.js</h2>
-                        <p>
-                            React meta-framework with SSR, SSG, and ISR
-                            capabilities with nat-ui.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-blue">Next.js</span>
-                            <span class="badge badge-purple">SSR</span>
-                            <span class="badge">React</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-next/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-next"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">💚</div>
-                        <h2>Nuxt</h2>
-                        <p>
-                            Vue meta-framework with powerful SSR and static
-                            generation.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-green">Nuxt.js</span>
-                            <span class="badge badge-purple">SSR</span>
-                            <span class="badge">Vue</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-nuxt/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-nuxt"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">🔺</div>
-                        <h2>Angular Universal</h2>
-                        <p>
-                            Official Angular SSR solution with nat-ui Web
-                            Components.
-                        </p>
-                        <div class="badges">
-                            <span class="badge">Angular Universal</span>
-                            <span class="badge badge-purple">SSR</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-angular-universal/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a
-                                href="https://github.com/tuongna/nat-ui-angular-universal"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">📐</div>
-                        <h2>Analog</h2>
-                        <p>
-                            Modern Angular meta-framework with Vite and SSR
-                            support.
-                        </p>
-                        <div class="badges">
-                            <span class="badge">Analog</span>
-                            <span class="badge badge-purple">SSR</span>
-                            <span class="badge">Vite</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-analog/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-analog"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Special Purpose -->
-                <h2 class="section-title">✨ Special Purpose</h2>
-                <p class="section-subtitle">
-                    Unique frameworks showcasing nat-ui versatility
-                </p>
-                <div class="projects">
-                    <div class="card featured">
-                        <span class="featured-badge">⭐ Zero JS</span>
-                        <div class="card-icon">🚀</div>
-                        <h2>Astro</h2>
-                        <p>
-                            Zero JavaScript by default with Islands
-                            Architecture. Perfect for content-driven sites.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-purple">Astro</span>
-                            <span class="badge badge-green">Zero JS</span>
-                            <span class="badge badge-blue">Islands</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-astro/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-astro"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">🔥</div>
-                        <h2>Lit</h2>
-                        <p>
-                            Google's Web Components library. Native Web
-                            Components with nat-ui.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-purple">Lit</span>
-                            <span class="badge">Web Components</span>
-                            <span class="badge badge-blue">Google</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-lit/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-lit"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">⚡</div>
-                        <h2>Preact</h2>
-                        <p>
-                            3KB React alternative. Lightweight and blazing fast
-                            with nat-ui.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-purple">Preact</span>
-                            <span class="badge badge-green">3KB</span>
-                            <span class="badge">Fast</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-preact/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-preact"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">💎</div>
-                        <h2>Solid</h2>
-                        <p>
-                            Fine-grained reactivity without Virtual DOM.
-                            Extremely performant.
-                        </p>
-                        <div class="badges">
-                            <span class="badge badge-blue">Solid.js</span>
-                            <span class="badge badge-green">Reactive</span>
-                            <span class="badge">No VDOM</span>
-                        </div>
-                        <div class="links">
-                            <a
-                                href="https://tuongna.github.io/nat-ui-solid/"
-                                class="link-primary"
-                                >🎯 Demo</a
-                            >
-                            <a href="https://github.com/tuongna/nat-ui-solid"
-                                >GitHub</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <footer>
-                    <p>Built with ❤️ by Tuong | Open Source under Apache 2.0</p>
-                    <a href="https://github.com/tuongna">🐙 GitHub Profile</a>
-                </footer>
-            </div>
-
-            <div id="skills-section" class="content-section">
-                <div class="heatmap-card">
-                    <div class="card-header">
-                        <h1>Skills Heatmap</h1>
-                    </div>
-                    <div class="filters-container">
-                        <div class="filter-section">
-                            <div class="filter-label">Filter by Category</div>
-                            <div class="filters" id="legend-filters">
-                                <button
-                                    class="filter-btn active"
-                                    data-group="all"
-                                >
-                                    <span>All Skills</span>
-                                </button>
-                                <button
-                                    class="filter-btn"
-                                    data-group="Frontend"
-                                >
-                                    <span>Frontend</span>
-                                    <span
-                                        class="filter-color"
-                                        style="background: rgba(59, 130, 246)"
-                                    ></span>
-                                </button>
-                                <button class="filter-btn" data-group="Backend">
-                                    <span>Backend</span>
-                                    <span
-                                        class="filter-color"
-                                        style="background: rgba(6, 182, 212)"
-                                    ></span>
-                                </button>
-                                <button class="filter-btn" data-group="AI">
-                                    <span>AI</span>
-                                    <span
-                                        class="filter-color"
-                                        style="background: rgba(245, 158, 11)"
-                                    ></span>
-                                </button>
-                                <button class="filter-btn" data-group="Soft">
-                                    <span>Soft Skills</span>
-                                    <span
-                                        class="filter-color"
-                                        style="background: rgba(236, 72, 153)"
-                                    ></span>
-                                </button>
-                                <button class="filter-btn" data-group="Other">
-                                    <span>Other</span>
-                                    <span
-                                        class="filter-color"
-                                        style="background: rgba(156, 163, 175)"
-                                    ></span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="filter-section">
-                            <div class="filter-label">
-                                Filter by Experience Level
-                            </div>
-                            <div class="filters" id="experience-filters">
-                                <button
-                                    class="filter-btn active"
-                                    data-level="all"
-                                >
-                                    All Levels
-                                </button>
-                                <button class="filter-btn" data-level="senior">
-                                    Senior [5y+)
-                                </button>
-                                <button class="filter-btn" data-level="mid">
-                                    Mid [3-5y)
-                                </button>
-                                <button class="filter-btn" data-level="junior">
-                                    Junior [1-3y)
-                                </button>
-                                <button class="filter-btn" data-level="fresher">
-                                    Fresher (0-1y)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="treemap-container" id="treemap"></div>
-                    </div>
-                </div>
-            </div>
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gửi thế hệ Junior Dev — Tháng 4, 2026</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1a1a;
+        --paper: #f5f0e8;
+        --paper-dark: #e8e0d0;
+        --accent: #8b2500;
+        --accent-light: #c4532b;
+        --muted: #6b6358;
+        --highlight: #fef3c7;
+        --rule: #c4b8a4;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 18px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Source Serif 4", Georgia, serif;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* === HEADER === */
+      .masthead {
+        text-align: center;
+        padding: 3rem 1.5rem 1rem;
+        border-bottom: 1px solid var(--rule);
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .masthead-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.25rem;
+      }
+
+      .masthead-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+      }
+
+      /* === HERO === */
+      .hero {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 2rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-weight: 900;
+        font-size: clamp(2.2rem, 6vw, 3.4rem);
+        line-height: 1.15;
+        color: var(--ink);
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+      }
+
+      .hero h1 em {
+        color: var(--accent);
+        font-style: italic;
+      }
+
+      .hero-sub {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: var(--muted);
+        font-style: italic;
+        max-width: 540px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--accent);
+        margin: 2.5rem auto;
+        border: none;
+      }
+
+      .divider-thin {
+        width: 100%;
+        height: 1px;
+        background: var(--rule);
+        margin: 2.5rem 0;
+        border: none;
+      }
+
+      /* === CONTENT === */
+      .content {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+      }
+
+      .content p {
+        margin-bottom: 1.25rem;
+        text-align: justify;
+        hyphens: auto;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .content p.opening {
+        font-size: 1.05rem;
+        font-weight: 300;
+      }
+
+      .content p.opening::first-letter {
+        font-family: "Playfair Display", serif;
+        font-size: 3.8rem;
+        font-weight: 900;
+        float: left;
+        line-height: 0.75;
+        margin: 0.1em 0.15em 0 0;
+        color: var(--accent);
+      }
+
+      /* === SECTION HEADERS === */
+      .section-num {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--paper-dark);
+        display: block;
+        margin-bottom: 0.5rem;
+        line-height: 1;
+        -webkit-text-stroke: 1px var(--rule);
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      /* === PULLQUOTE === */
+      .pullquote {
+        margin: 2.5rem -1rem;
+        padding: 1.5rem 2rem;
+        border-left: 4px solid var(--accent);
+        background: linear-gradient(
+          135deg,
+          var(--highlight) 0%,
+          transparent 100%
+        );
+        border-radius: 0 8px 8px 0;
+      }
+
+      .pullquote p {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-style: italic;
+        color: var(--accent);
+        text-align: left;
+        line-height: 1.5;
+        margin-bottom: 0;
+      }
+
+      /* === DATA CARD === */
+      .data-card {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2.5rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .data-card .stat {
+        text-align: center;
+      }
+
+      .data-card .stat-number {
+        font-family: "Playfair Display", serif;
+        font-size: 2.4rem;
+        font-weight: 900;
+        color: var(--accent-light);
+        display: block;
+        line-height: 1.1;
+      }
+
+      .data-card .stat-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #a09888;
+        margin-top: 0.35rem;
+        display: block;
+        line-height: 1.4;
+      }
+
+      /* === INSIGHT BOX === */
+      .insight-box {
+        background: white;
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+        padding: 1.5rem 1.8rem;
+        margin: 2.5rem 0;
+        position: relative;
+      }
+
+      .insight-box::before {
+        content: "→";
+        position: absolute;
+        top: -0.75rem;
+        left: 1.5rem;
+        background: var(--accent);
+        color: white;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .insight-box .insight-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+
+      .insight-box p {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+
+      .insight-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* === TIMELINE === */
+      .timeline {
+        margin: 2.5rem 0;
+        padding-left: 1.5rem;
+        border-left: 2px solid var(--rule);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -1.58rem;
+        top: 0.45rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: 2px solid var(--paper);
+      }
+
+      .timeline-year {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .timeline-text {
+        font-size: 0.9rem;
+        color: var(--ink);
+        margin-top: 0.2rem;
+        line-height: 1.6;
+      }
+
+      /* === FOOTER === */
+      .footer {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+        text-align: center;
+        border-top: 1px solid var(--rule);
+      }
+
+      .footer p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      /* === RESPONSIVE === */
+      @media (max-width: 600px) {
+        html {
+          font-size: 16px;
+        }
+        .data-card {
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+          padding: 1.5rem;
+        }
+        .data-card .stat-number {
+          font-size: 1.8rem;
+        }
+        .pullquote {
+          margin: 2rem 0;
+          padding: 1.2rem 1.5rem;
+        }
+        .hero h1 {
+          font-size: 2rem;
+        }
+      }
+
+      /* === ANIMATION === */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero,
+      .content > *,
+      .data-card,
+      .pullquote,
+      .insight-box,
+      .timeline {
+        animation: fadeUp 0.6s ease-out both;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="masthead-label">Thư ngỏ</div>
+      <div class="masthead-date">Tháng 4 · 2026 · Sài Gòn</div>
+    </header>
+
+    <section class="hero">
+      <h1>
+        Gửi thế hệ Junior Dev:<br />Đừng bỏ cuộc —<br /><em
+          >Thời của bạn đang đến</em
+        >
+      </h1>
+      <p class="hero-sub">
+        Mọi người nói AI sẽ thay thế bạn. Dữ liệu nói điều ngược lại. Đây là lý
+        do tại sao 2-3 năm nữa, bạn sẽ là người được săn đón.
+      </p>
+    </section>
+
+    <hr class="divider" />
+
+    <article class="content">
+      <p class="opening">
+        Nếu bạn là một junior developer đang đọc những dòng này, có lẽ bạn đang
+        cảm thấy ngạt thở. Các tiêu đề báo chí la hét rằng AI sẽ thay thế lập
+        trình viên. Công ty nào cũng đòi "3 năm kinh nghiệm" cho vị trí
+        entry-level. Bạn nộp hàng chục CV mà không ai gọi lại. Tôi hiểu cảm giác
+        đó. Nhưng tôi muốn bạn dừng lại, hít thở, và nhìn vào bức tranh rộng hơn
+        — vì có những thứ đang xảy ra phía sau hậu trường mà hầu hết mọi người
+        chưa nhìn thấy.
+      </p>
+
+      <hr class="divider-thin" />
+
+      <!-- SECTION 1 -->
+      <span class="section-num">01</span>
+      <h2 class="section-title">Ngành công nghiệp đang tự đặt bẫy cho mình</h2>
+
+      <p>Hãy nhìn vào các con số:</p>
+
+      <div class="data-card">
+        <div class="stat">
+          <span class="stat-number">−78%</span>
+          <span class="stat-label"
+            >Tỷ lệ junior trong Big Tech<br />(32% → 7%, 2019–2026)</span
+          >
         </div>
+        <div class="stat">
+          <span class="stat-number">−60%</span>
+          <span class="stat-label">Vị trí entry-level<br />(2022 → 2024)</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">−73%</span>
+          <span class="stat-label"
+            >Tuyển dụng junior<br />toàn ngành (năm qua)</span
+          >
+        </div>
+        <div class="stat">
+          <span class="stat-number">70%</span>
+          <span class="stat-label"
+            >Xác suất khủng hoảng<br />nhân lực 2029–2031</span
+          >
+        </div>
+      </div>
 
-        <script>
-            // Navigation
-            function switchTab(tab) {
-                document
-                    .querySelectorAll('.content-section')
-                    .forEach((s) => s.classList.remove('active'));
-                document
-                    .querySelectorAll('.nav-tab')
-                    .forEach((t) => t.classList.remove('active'));
+      <p>
+        Nhìn những con số này, bạn có thể hoảng sợ. Nhưng hãy đọc theo hướng
+        khác: nếu ngành cắt gần hết junior hôm nay, thì ai sẽ là mid-level trong
+        3 năm nữa? Ai sẽ là senior trong 5 năm? Không ai cả.
+      </p>
 
-                if (tab === 'portfolio') {
-                    document
-                        .getElementById('portfolio-section')
-                        .classList.add('active');
-                    event.target.classList.add('active');
-                } else {
-                    document
-                        .getElementById('skills-section')
-                        .classList.add('active');
-                    event.target.classList.add('active');
-                    // Render treemap when switching to skills tab
-                    setTimeout(renderTreemap, 100);
-                }
-            }
+      <p>
+        Đây không phải suy đoán. Chính xác kịch bản này đã xảy ra sau khủng
+        hoảng 2008. Khi các công ty đóng băng tuyển dụng junior, đến năm 2012 họ
+        lao đao tìm dev có 3-5 năm kinh nghiệm vì đơn giản là không có ai.
+        Pipeline bị cắt đứt, và giá của những dev có kinh nghiệm tăng vọt.
+      </p>
 
-            const FE = 'Frontend';
-            const BE = 'Backend';
-            const AI = 'AI';
-            const SO = 'Soft';
-            const OT = 'Other';
+      <div class="pullquote">
+        <p>
+          Cắt gốc cây rồi 3 năm sau thắc mắc tại sao không có quả — đó là điều
+          ngành đang làm.
+        </p>
+      </div>
 
-            const rawSkills = [
-                { skill: 'HTML/CSS/SCSS', years: 8, group: FE },
-                { skill: 'TypeScript', years: 7, group: FE },
-                { skill: 'React', years: 5, group: FE },
-                { skill: 'Vue3', years: 2, group: FE },
-                { skill: 'Nuxt3', years: 2, group: FE },
-                { skill: 'Next', years: 2, group: FE },
-                { skill: 'Angular', years: 2, group: FE },
-                { skill: 'Svelte', years: 2, group: FE },
-                { skill: 'VanillaJS', years: 1, group: FE },
-                { skill: 'Stencil', years: 0.5, group: FE },
-                { skill: 'PWA', years: 0.5, group: FE },
-                { skill: 'WebAssembly', years: 0.5, group: FE },
+      <hr class="divider-thin" />
 
-                { skill: 'Node.js', years: 0.5, group: BE },
-                { skill: 'Python', years: 0.5, group: BE },
-                { skill: 'Go', years: 0.5, group: BE },
-                { skill: 'Java', years: 0.5, group: BE },
+      <!-- SECTION 2 -->
+      <span class="section-num">02</span>
+      <h2 class="section-title">AI có trần — và trần đó rất "vật lý"</h2>
 
-                { skill: 'AI-assisted development', years: 3, group: AI },
-                { skill: 'LLM/Transformer/STT', years: 0.5, group: AI },
+      <p>
+        Narrative "AI thay thế lập trình viên" bỏ qua một thực tế quan trọng: AI
+        chạy bằng điện, chạy trên chip, và cả hai đều đang chạm giới hạn cứng.
+      </p>
 
-                { skill: 'Support/Guidance', years: 3, group: SO },
-                { skill: 'Product mindset', years: 1, group: SO },
-                { skill: 'Korean', years: 0.5, group: SO },
-                { skill: 'English', years: 1, group: SO },
+      <p>
+        <strong>Điện năng:</strong> Một tác vụ AI tiêu tốn điện gấp khoảng 1.000
+        lần so với tìm kiếm web thông thường. Data center toàn cầu dự kiến vượt
+        1.000 TWh vào 2026. Lưới điện Mỹ có thể thiếu hụt 6 GW vào 2027 — bằng
+        sáu nhà máy điện hạt nhân. Giá điện lẻ ở Mỹ đã tăng 42% từ 2019. Ireland
+        đã phải cấm kết nối mới cho data center ở vùng Dublin.
+      </p>
 
-                { skill: 'Git & GitHub & Gitlab', years: 7, group: OT },
-                { skill: 'Agile/Scrum', years: 4, group: OT },
-                { skill: 'CI/CD', years: 0.5, group: OT },
-                { skill: 'Docker', years: 0.5, group: OT },
-            ];
+      <p>
+        <strong>Chip:</strong> Các nhà khoa học tại hội nghị Nature (11/2025)
+        khẳng định: silicon đang chạm giới hạn vật lý. Dưới 5nm, chi phí sản
+        xuất không giảm nữa mà tăng ngược. Một nhà máy chip tiên tiến năm 2026
+        tốn hơn 20 tỷ USD. Mỗi máy quang khắc EUV thế hệ mới vượt 400 triệu USD.
+      </p>
 
-            const groupColors = {
-                [FE]: 'rgba(59, 130, 246)',
-                [BE]: 'rgba(6, 182, 212)',
-                [AI]: 'rgba(245, 158, 11)',
-                [SO]: 'rgba(236, 72, 153)',
-                [OT]: 'rgba(156, 163, 175)',
-            };
+      <p>
+        <strong>Tản nhiệt:</strong> GPU AI thế hệ mới tiêu thụ cỡ 1.000W mỗi
+        package. Giới hạn nhiệt là ràng buộc không thể bỏ qua — khi không tản
+        được nhiệt, bạn không thể tăng tốc, dù transistor có nhỏ đến đâu.
+      </p>
 
-            let activeFilter = 'all';
-            let experienceLevel = 'all';
+      <div class="insight-box">
+        <div class="insight-label">Điều này có nghĩa gì cho bạn?</div>
+        <p>
+          AI sẽ không "nhảy" exponential trong 2-3 năm tới theo cách nhiều người
+          tưởng. Cải thiện sẽ đến từ kiến trúc, thuật toán, tối ưu — chứ không
+          phải bước đột phá thay thế con người. Và chính điều đó đồng nghĩa: vẫn
+          cần người để xây, vận hành, và đánh giá những hệ thống này.
+        </p>
+      </div>
 
-            function createTreemapData() {
-                const groups = {};
+      <hr class="divider-thin" />
 
-                rawSkills.forEach((skill) => {
-                    if (!groups[skill.group]) {
-                        groups[skill.group] = [];
-                    }
-                    groups[skill.group].push({
-                        name: skill.skill,
-                        value: skill.years,
-                        group: skill.group,
-                    });
-                });
+      <!-- SECTION 3 -->
+      <span class="section-num">03</span>
+      <h2 class="section-title">AI không thay thế bạn — nó thay đổi bạn</h2>
 
-                return groups;
-            }
+      <p>
+        Đây là sự thật mà ít ai nói rõ: AI khuếch đại năng suất của engineer
+        giỏi, chứ không thay thế được engineer yếu. Nếu bạn không hiểu kiến trúc
+        hệ thống, AI tạo code cho bạn thì ai sẽ review? Ai sẽ quyết định
+        trade-off? Ai sẽ hiểu tại sao code chạy đúng trong test nhưng sập trong
+        production?
+      </p>
 
-            function squarify(data, x, y, width, height) {
-                if (data.length === 0) return [];
-                if (width <= 0 || height <= 0) return [];
+      <p>
+        Nghĩ theo cách này: máy ATM không giết ngành ngân hàng. Khi mỗi chi
+        nhánh cần ít nhân viên hơn cho giao dịch đơn giản, ngân hàng mở thêm chi
+        nhánh — và tổng số nhân viên thực tế tăng, vì phạm vi phục vụ mở rộng.
+        Đây là <strong>nghịch lý Jevons</strong>: khi công cụ hiệu quả hơn, tổng
+        nhu cầu thường tăng.
+      </p>
 
-                const sorted = [...data].sort((a, b) => b.value - a.value);
-                const totalValue = sorted.reduce((sum, d) => sum + d.value, 0);
+      <p>
+        Với AI cũng vậy. Khi một senior dev có thể làm output bằng ba người nhờ
+        AI, công ty sẽ không sa thải hai người — họ sẽ nhận thêm ba dự án mới.
+        Và ai sẽ cần để chạy những dự án đó?
+      </p>
 
-                if (totalValue === 0) return [];
+      <div class="pullquote">
+        <p>
+          "AI thay thế dev" là narrative bán bởi marketing. Thực tế trên sàn: AI
+          đang tạo ra nhiều việc hơn chứ không ít hơn — nhưng việc khác.
+        </p>
+      </div>
 
-                return layoutSquarified(
-                    sorted,
-                    x,
-                    y,
-                    width,
-                    height,
-                    totalValue
-                );
-            }
+      <hr class="divider-thin" />
 
-            function layoutSquarified(data, x, y, width, height, totalValue) {
-                if (data.length === 0) return [];
-                if (data.length === 1) {
-                    return [{ ...data[0], x, y, width, height }];
-                }
+      <!-- SECTION 4 -->
+      <span class="section-num">04</span>
+      <h2 class="section-title">Vậy bạn nên làm gì — ngay bây giờ?</h2>
 
-                const aspectRatio = width / height;
-                const vertical = aspectRatio < 1.2;
+      <p>
+        <strong>Thứ nhất, đừng học "code" — hãy học "hệ thống."</strong> Năm
+        2020, một app To-Do chứng minh bạn biết code. Năm 2026, AI tạo app To-Do
+        trong 60 giây. Portfolio của bạn phải chứng minh bạn hiểu kiến trúc,
+        deployment, CI/CD, database, và cách các thành phần nói chuyện với nhau.
+        Hãy xây 2 ứng dụng end-to-end hoàn chỉnh — từ frontend đến backend đến
+        database đến deploy — thay vì 20 project toy.
+      </p>
 
-                let row = [data[0]];
-                let rowValue = data[0].value;
+      <p>
+        <strong>Thứ hai, học làm việc VỚI AI, không phải sợ AI.</strong> Đừng
+        chỉ dừng ở "prompt engineering." Hãy học context engineering — hiểu cách
+        quản lý context window của LLM, cách đánh giá output AI, cách phát hiện
+        lỗi trong code AI tạo ra. Đây là kỹ năng mà senior dev cũng đang phải
+        học, và bạn bắt đầu sớm hơn họ.
+      </p>
 
-                for (let i = 1; i < data.length; i++) {
-                    const newRowValue = rowValue + data[i].value;
-                    const currentRatio = getWorstRatio(
-                        row,
-                        rowValue,
-                        totalValue,
-                        width,
-                        height,
-                        vertical
-                    );
-                    const newRow = [...row, data[i]];
-                    const newRatio = getWorstRatio(
-                        newRow,
-                        newRowValue,
-                        totalValue,
-                        width,
-                        height,
-                        vertical
-                    );
+      <p>
+        <strong>Thứ ba, nhắm đúng nơi.</strong> Đừng chỉ nộp CV vào startup và
+        Big Tech. Các công ty SaaS cỡ vừa, tổ chức y tế, tài chính, bảo hiểm,
+        logistics — những ngành "nhàm chán" — đang tuyển dụng nhiều nhất. Vị trí
+        entry-level trong AI tại ngành bảo hiểm tăng 74% trong năm qua. Đừng tìm
+        "Junior Software Engineer" — hãy tìm "Implementation Engineer,"
+        "Solutions Engineer," "Support Engineer" — những cửa ngách mà cạnh tranh
+        ít hơn.
+      </p>
 
-                    if (newRatio > currentRatio) break;
+      <p>
+        <strong>Thứ tư, đóng góp vào open source.</strong> 3-5 pull request có
+        chất lượng vào dự án thật đáng giá hơn mọi chứng chỉ. Nó chứng minh bạn
+        biết làm việc với codebase thật, review code, và giao tiếp với team.
+      </p>
 
-                    row.push(data[i]);
-                    rowValue = newRowValue;
-                }
+      <p>
+        <strong>Thứ năm, kiên nhẫn — nhưng kiên nhẫn có chiến lược.</strong>
+        Thực tế là con đường từ beginner đến vị trí full-stack đầu tiên mất 6-18
+        tháng nỗ lực nghiêm túc. Đây là cuộc chơi dài. Nhưng mỗi tháng bạn trụ
+        được là mỗi tháng bạn tích luỹ thứ mà AI không bao giờ có: kinh nghiệm
+        thực tế trong hệ thống thực tế.
+      </p>
 
-                const rowRects = layoutRow(
-                    row,
-                    x,
-                    y,
-                    width,
-                    height,
-                    rowValue,
-                    totalValue,
-                    vertical
-                );
+      <hr class="divider-thin" />
 
-                const remaining = data.slice(row.length);
-                if (remaining.length === 0) return rowRects;
+      <!-- SECTION 5 -->
+      <span class="section-num">05</span>
+      <h2 class="section-title">Bức tranh 3 năm tới</h2>
 
-                const remainingValue = totalValue - rowValue;
-                let remainingRects;
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2026 — BÂY GIỜ</div>
+          <div class="timeline-text">
+            Pipeline junior bị nghẽn nặng. Công ty ưu tiên senior. Narrative "AI
+            thay thế dev" ở đỉnh điểm.
+            <strong
+              >Đây là lúc khó nhất — nhưng cũng là lúc bạn xây nền móng.</strong
+            >
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2027–2028</div>
+          <div class="timeline-text">
+            Senior về hưu (18% dev sinh 1970-1980 dự kiến nghỉ trước 2027). Giới
+            hạn điện năng và chip bắt đầu làm chậm tốc độ cải thiện AI. Công ty
+            bắt đầu cảm nhận khoảng trống mid-level.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2029–2031</div>
+          <div class="timeline-text">
+            Khủng hoảng nhân lực trở nên rõ ràng. Các công ty cắt training
+            budget năm 2024 giờ trả giá gấp 10 lần trong cuộc chiến giành nhân
+            tài.
+            <strong
+              >Nếu bạn có 3-5 năm kinh nghiệm lúc này, bạn là vàng.</strong
+            >
+          </div>
+        </div>
+      </div>
 
-                if (vertical) {
-                    const rowHeight = (rowValue / totalValue) * height;
-                    remainingRects = layoutSquarified(
-                        remaining,
-                        x,
-                        y + rowHeight,
-                        width,
-                        height - rowHeight,
-                        remainingValue
-                    );
-                } else {
-                    const rowWidth = (rowValue / totalValue) * width;
-                    remainingRects = layoutSquarified(
-                        remaining,
-                        x + rowWidth,
-                        y,
-                        width - rowWidth,
-                        height,
-                        remainingValue
-                    );
-                }
+      <hr class="divider-thin" />
 
-                return [...rowRects, ...remainingRects];
-            }
+      <p>
+        Tôi viết những dòng này không phải để vẽ lên một bức tranh màu hồng. Thị
+        trường bây giờ thực sự tàn khốc. Nhưng tàn khốc cho ai nộp CV rồi chờ —
+        không tàn khốc cho ai đang xây, đang học, đang đóng góp.
+      </p>
 
-            function getWorstRatio(
-                row,
-                rowValue,
-                totalValue,
-                width,
-                height,
-                vertical
-            ) {
-                const rowProportion = rowValue / totalValue;
-                const length = vertical
-                    ? height * rowProportion
-                    : width * rowProportion;
-                const breadth = vertical ? width : height;
+      <p>
+        Mỗi ngày bạn kiên trì là mỗi ngày bạn mở rộng khoảng cách với hàng nghìn
+        người khác đã bỏ cuộc vì tin rằng "AI thay hết rồi." Khi làn sóng thiếu
+        hụt nhân lực ập đến — và nó sẽ đến — bạn sẽ là người đứng sẵn ở đó.
+      </p>
 
-                let worstRatio = 0;
+      <div class="pullquote">
+        <p>
+          Thị trường không thưởng cho ai nhanh nhất. Thị trường thưởng cho ai
+          còn đứng đó khi những người khác đã bỏ đi.
+        </p>
+      </div>
 
-                for (const item of row) {
-                    const itemProportion = item.value / rowValue;
-                    const itemBreadth = breadth * itemProportion;
-                    const ratio = Math.max(
-                        length / itemBreadth,
-                        itemBreadth / length
-                    );
-                    worstRatio = Math.max(worstRatio, ratio);
-                }
+      <p
+        style="
+          text-align: center;
+          margin-top: 2rem;
+          font-style: italic;
+          color: var(--muted);
+        "
+      >
+        Chúc bạn vững tin và kiên nhẫn.<br />— Viết tại Sài Gòn, tháng 4/2026
+      </p>
+    </article>
 
-                return worstRatio;
-            }
-
-            function layoutRow(
-                row,
-                x,
-                y,
-                width,
-                height,
-                rowValue,
-                totalValue,
-                vertical
-            ) {
-                const rowProportion = rowValue / totalValue;
-                const rects = [];
-                let offset = 0;
-
-                for (const item of row) {
-                    const itemProportion = item.value / rowValue;
-
-                    if (vertical) {
-                        const rowHeight = height * rowProportion;
-                        const itemWidth = width * itemProportion;
-                        rects.push({
-                            ...item,
-                            x: x + offset,
-                            y,
-                            width: itemWidth,
-                            height: rowHeight,
-                        });
-                        offset += itemWidth;
-                    } else {
-                        const rowWidth = width * rowProportion;
-                        const itemHeight = height * itemProportion;
-                        rects.push({
-                            ...item,
-                            x,
-                            y: y + offset,
-                            width: rowWidth,
-                            height: itemHeight,
-                        });
-                        offset += itemHeight;
-                    }
-                }
-
-                return rects;
-            }
-
-            function isItemVisible(item) {
-                const categoryMatch =
-                    activeFilter === 'all' || item.group === activeFilter;
-
-                let experienceMatch = true;
-                if (experienceLevel === 'fresher') {
-                    experienceMatch = item.value >= 0 && item.value <= 1;
-                } else if (experienceLevel === 'junior') {
-                    experienceMatch = item.value > 1 && item.value < 3;
-                } else if (experienceLevel === 'mid') {
-                    experienceMatch = item.value >= 3 && item.value < 5;
-                } else if (experienceLevel === 'senior') {
-                    experienceMatch = item.value >= 5;
-                }
-
-                return categoryMatch && experienceMatch;
-            }
-
-            function renderTreemap() {
-                const container = document.getElementById('treemap');
-                const width = container.clientWidth;
-                const height = container.clientHeight;
-
-                container.innerHTML = '';
-
-                const groupedData = createTreemapData();
-
-                const allItems = [];
-                Object.keys(groupedData).forEach((group) => {
-                    groupedData[group].forEach((item) => {
-                        allItems.push({ ...item, group: group });
-                    });
-                });
-
-                const rects = squarify(allItems, 0, 0, width, height);
-
-                rects.forEach((rect) => {
-                    if (rect.width < 1 || rect.height < 1) return;
-
-                    const tile = document.createElement('div');
-                    tile.className = 'tile';
-                    tile.style.left = `${rect.x}px`;
-                    tile.style.top = `${rect.y}px`;
-                    tile.style.width = `${rect.width}px`;
-                    tile.style.height = `${rect.height}px`;
-                    tile.style.backgroundColor = groupColors[rect.group];
-                    tile.dataset.group = rect.group;
-
-                    const visible = isItemVisible(rect);
-                    if (!visible) {
-                        tile.classList.add('dimmed');
-                    } else {
-                        tile.classList.add('highlighted');
-                    }
-
-                    tile.title = `${rect.name}: ${rect.value} year${
-                        rect.value !== 1 ? 's' : ''
-                    }`;
-
-                    const label = document.createElement('div');
-                    label.className = 'tile-label';
-                    label.textContent = rect.name;
-
-                    const value = document.createElement('div');
-                    value.className = 'tile-value';
-                    value.textContent = `${rect.value}y`;
-
-                    if (rect.width > 80 && rect.height > 50) {
-                        tile.appendChild(label);
-                        tile.appendChild(value);
-                    } else if (rect.width > 50 && rect.height > 35) {
-                        label.style.fontSize = '10px';
-                        value.style.fontSize = '11px';
-                        tile.appendChild(label);
-                        tile.appendChild(value);
-                    } else if (rect.width > 35 && rect.height > 25) {
-                        label.style.fontSize = '9px';
-                        tile.appendChild(label);
-                    }
-
-                    container.appendChild(tile);
-                });
-            }
-
-            function setupCategoryFilters() {
-                const legendItems = document.querySelectorAll(
-                    '#legend-filters .filter-btn'
-                );
-
-                legendItems.forEach((item) => {
-                    item.addEventListener('click', () => {
-                        const group = item.dataset.group;
-                        legendItems.forEach((li) =>
-                            li.classList.remove('active')
-                        );
-                        item.classList.add('active');
-                        activeFilter = group;
-                        renderTreemap();
-                    });
-                });
-            }
-
-            function setupExperienceFilters() {
-                const expButtons = document.querySelectorAll(
-                    '#experience-filters .filter-btn'
-                );
-
-                expButtons.forEach((btn) => {
-                    btn.addEventListener('click', () => {
-                        const level = btn.dataset.level;
-                        expButtons.forEach((b) => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        experienceLevel = level;
-                        renderTreemap();
-                    });
-                });
-            }
-
-            renderTreemap();
-            setupCategoryFilters();
-            setupExperienceFilters();
-
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(renderTreemap, 150);
-            });
-        </script>
-    </body>
+    <footer class="footer">
+      <p>
+        Dựa trên dữ liệu từ WEF · ILO · BLS · Nature · IEA · và nhiều nguồn phân
+        tích ngành khác
+      </p>
+    </footer>
+  </body>
 </html>
